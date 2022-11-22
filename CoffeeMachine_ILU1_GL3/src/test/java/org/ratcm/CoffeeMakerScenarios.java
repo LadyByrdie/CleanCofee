@@ -68,7 +68,7 @@ public class CoffeeMakerScenarios {
     private void testCheckInventoryBeforeUse() {
 	Inventory invent;
 	int somme;
-	invent = cm.getInventory();
+	invent = CoffeeMaker.getInventory();
 	somme = invent.getCoffee() + invent.getMilk() + invent.getSugar() + invent.getChocolate();
 	if ((somme == 60)) {
 	    System.out.println("testCheckInventoryBeforeUse passed with succes");
@@ -105,26 +105,53 @@ public class CoffeeMakerScenarios {
 	assertEquals(50, cm.makeCoffee(0, 50));
 	System.out.println("testMakingManyCoffeesEmptiesStock passed with success");
     }
+    
+   
 
     private void testMakingManyCoffeesAfterRefillIsStillPossible() {
-	int numberCoffeeMake = 0;
-	Inventory invent = cm.getInventory();
+	cm.addRecipe(r1);
+    int numberCoffeeMake = 0;
+	int change;
+	Inventory invent = CoffeeMaker.getInventory();
 	for (int i = 0; i < 5; i++) {
 	    cm.makeCoffee(0, 50);
 	}
 	try {
-	    cm.addInventory("15", "0", "0", " 0");
+	    cm.addInventory(15, 0, 0, 0);
+	    assertEquals(15,invent.getCoffee());
 	} catch (InventoryException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 
-	while (invent.getCoffee() > 0) {
-	    cm.makeCoffee(1, 50);
+	while (invent.getCoffee()> 0) {
+	    change=cm.makeCoffee(0, 50);
 	    numberCoffeeMake++;
 	}
 	assertEquals(5, numberCoffeeMake);
+	
 	System.out.println("testMakingManyCoffeesAfterRefillIsStillPossible passed with success");
+    }
+    
+    private void printInventory() {
+    	Inventory invent= CoffeeMaker.getInventory();
+    	System.out.println("Milk: " +invent.getMilk()+ " Coffee: " +invent.getCoffee()+ 
+    	" Chocolate: "+ invent.getChocolate()+ " Sugar: "+ invent.getSugar());
+    }
+    
+ private void testChekInventoryAfterThreeCoffees() {
+    cm.addRecipe(r1);
+    Inventory invent= CoffeeMaker.getInventory();
+    for(int i=0; i<3; i++) {
+    	cm.makeCoffee(0, 50);
+    }
+    printInventory();
+    assertEquals(6,invent.getCoffee());
+    assertEquals(12,invent.getMilk());
+    assertEquals(12,invent.getSugar());
+    assertEquals(15,invent.getChocolate());
+    
+    System.out.println("testChekInventoryAfterThreeCoffees passed with success");
     }
 
     private void assertEquals(int expectedValue, int testedValue) {
@@ -141,6 +168,7 @@ public class CoffeeMakerScenarios {
 //	testScenario.testMakeCoffeeWithoutEnoughMoney();
 //	testScenario.testMakeMochaWithNoSufficientChocolate();
 //	testScenario.testMakingManyCoffeesEmptiesStock();
+//	testScenario.testChekInventoryAfterThreeCoffees();
     }
 
 }

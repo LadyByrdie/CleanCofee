@@ -58,18 +58,18 @@ public class CoffeeMaker {
 	/**
 	 * Returns true if inventory was successfully added
 	 * 
-	 * @param amtCoffee
-	 * @param amtMilk
-	 * @param amtSugar
-	 * @param amtChocolate
+	 * @param coffeeString
+	 * @param milkString
+	 * @param sugarString
+	 * @param chocolateString
 	 * @return boolean
 	 */
-	public void addInventory(String amtCoffee, String amtMilk, String amtSugar, String amtChocolate)
+	public void addInventory(int coffeeString, int milkString, int sugarString, int chocolateString)
 			throws InventoryException {
-		inventory.addCoffee(amtCoffee);
-		inventory.addMilk(amtMilk);
-		inventory.addSugar(amtSugar);
-		inventory.addChocolate(amtChocolate);
+		inventory.setCoffee(coffeeString);
+		inventory.setMilk(milkString);
+		inventory.setSugar(sugarString);
+		inventory.setChocolate(chocolateString);
 	}
 
 	/**
@@ -94,8 +94,7 @@ public class CoffeeMaker {
 		
 		final Recipe recipeToPurchase = getRecipes()[recipeNb];
 		final int beveragePrice = recipeToPurchase != null
-				? recipeToPurchase.getPrice()
-				: null;
+				? recipeToPurchase.getPrice(): null;
 		if ((recipeToPurchase != null)
 				&& (beveragePrice <= amtPaid)
 				&& (inventory.useIngredients(recipeToPurchase))) {

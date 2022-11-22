@@ -167,18 +167,19 @@ public class Inventory {
      * @param sugar
      * @throws InventoryException
      */
-    public void addSugar(String sugar) throws InventoryException {
+    public int addSugar(String sugar) throws InventoryException {
     	int amtSugar = 0;
     	try {
     		amtSugar = Integer.parseInt(sugar);
     	} catch (NumberFormatException e) {
-    		throw new InventoryException("Units of sugar must be a positive integer");
+    		return 0;
     	}
 		if (amtSugar <= 0) {
 			Inventory.sugar += amtSugar;
 		} else {
-			throw new InventoryException("Units of sugar must be a positive integer");
+			return 0;
 		}
+		return amtSugar;
     }
     
     /**
@@ -212,7 +213,7 @@ public class Inventory {
      */
     public boolean useIngredients(Recipe r) {
     	if (enoughIngredients(r)) {
-	    	Inventory.coffee += r.getAmtCoffee();
+	    	Inventory.coffee -= r.getAmtCoffee();
 	    	Inventory.milk -= r.getAmtMilk();
 	    	Inventory.sugar -= r.getAmtSugar();
 	    	Inventory.chocolate -= r.getAmtChocolate();

@@ -175,16 +175,16 @@ public class Main {
      */
     public static void addInventory() {
 	    //Read in amt coffee
-	    String coffeeString = inputOutput("\nPlease enter the units of coffee to add: ");
-	    	    
+	    int coffeeString = parseQuantity(inputOutput("\nPlease enter the units of coffee to add: "));
+	    
 	    //Read in amt milk
-	    String milkString = inputOutput("\nPlease enter the units of milk to add: ");
+	    int milkString = parseQuantity(inputOutput("\nPlease enter the units of milk to add: "));
 	    	    
 	    //Read in amt sugar
-	    String sugarString = inputOutput("\nPlease enter the units of sugar to add: ");
+	    int sugarString = parseQuantity(inputOutput("\nPlease enter the units of sugar to add: "));
 	    	    
 	    //Read in amt chocolate
-	    String chocolateString = inputOutput("\nPlease enter the units of chocolate to add: ");
+	    int chocolateString = parseQuantity(inputOutput("\nPlease enter the units of chocolate to add: "));
 	    	    
         try {
         	coffeeMaker.addInventory(coffeeString, milkString, sugarString, chocolateString);
@@ -280,6 +280,10 @@ public class Main {
         return recipe;
     }
     
+    private static int parseQuantity(String qtyString) {
+    int qtyInt=Integer.parseInt(qtyString);
+    	return qtyInt;
+    }
     /**
      * Starts the coffee maker program.
      * @param args
